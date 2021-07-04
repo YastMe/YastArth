@@ -46,6 +46,8 @@ def log():
 
             elif len(resp) > 0:
                 logging.info(demojize(resp))
+
+            x = 0
         except:
             time.sleep(x)
             x = x*2
