@@ -84,8 +84,6 @@ def cmd(msg, user, cd):
             participantes(user)
         elif command == "normas":
             normas(user)
-        elif command == "prueba":
-            prueba()
 
     return cd
 
@@ -164,12 +162,3 @@ def gah(user):
     sonido.play()
     if random.randint(1, 20) == 20:
         Sender.chat(f"/timeout {user} 10 Bonk")
-
-
-def prueba():
-    Sender.chat("Prueba")
-    Sender.chat("Prueba")
-    Sender.chat("Prueba")
-    Sender.chat("Prueba")
-    Sender.chat("Prueba")
-    Sender.chat("Prueba")
