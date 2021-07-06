@@ -1,3 +1,4 @@
+import os
 import random
 
 from pygame import mixer
@@ -37,10 +38,6 @@ def main():
                 cd[i] -= 1
         if cd[2] == 0:
             cd = ad(cd)
-        if x == 2500:
-            x = 0
-            chat.close()
-            chat = open("chat.txt", "r", encoding="utf-8")
 
 
 def comprobar(lineas, lineas_act, lineas_prev, cd, users):  ##Comprobación y ejecución de comandos
@@ -59,6 +56,8 @@ def comprobar(lineas, lineas_act, lineas_prev, cd, users):  ##Comprobación y ej
                     cd[4] = 3000
                 else:
                     cooldown_failed(usr, "nullpo", cd[4])
+            if (usr == "renzoxrock" or usr == "ginebra08") and msg.split(" ")[0].lower() == "puto":
+                Sender.chat(f"/me ¡Oye, {usr}! ¡Así no se saluda!")
 
 
 def cmd(msg, user, cd):
@@ -81,10 +80,12 @@ def cmd(msg, user, cd):
                 cooldown_failed(user, command, cd[1])
         if command == "comandos":
             lista(user)
-        if command == "participantes":
+        elif command == "participantes":
             participantes(user)
-        if command == "normas":
+        elif command == "normas":
             normas(user)
+        elif command == "prueba":
+            prueba()
 
     return cd
 
@@ -163,3 +164,12 @@ def gah(user):
     sonido.play()
     if random.randint(1, 20) == 20:
         Sender.chat(f"/timeout {user} 10 Bonk")
+
+
+def prueba():
+    Sender.chat("Prueba")
+    Sender.chat("Prueba")
+    Sender.chat("Prueba")
+    Sender.chat("Prueba")
+    Sender.chat("Prueba")
+    Sender.chat("Prueba")

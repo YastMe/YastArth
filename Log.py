@@ -28,18 +28,14 @@ def log():
 
     x = 0
     t = 0
+    logging.basicConfig(level=logging.DEBUG,
+                        format='%(asctime)s — %(message)s',
+                        datefmt='%Y-%m-%d_%H:%M:%S',
+                        handlers=[logging.FileHandler('chat.log', encoding='utf-8')])
 
     while True:
 
         try:
-            resp = sock.recv(2048).decode('utf-8')
-            logging.basicConfig(level=logging.DEBUG,
-                                format='%(asctime)s — %(message)s',
-                                datefmt='%Y-%m-%d_%H:%M:%S',
-                                handlers=[logging.FileHandler('chat.log', encoding='utf-8')])
-
-            logging.info(resp)
-
             resp = sock.recv(2048).decode('utf-8')
 
             if resp.startswith('PING'):

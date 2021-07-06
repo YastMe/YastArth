@@ -17,8 +17,6 @@ def parse():
                             msg = i.split("—")[1].split(":")[2]
                             line = [user, msg]
                             lines.append(line)
-                else:
-                    Sender.PONG()
 
         for i in lines:
             chat_parsed.write(str(i))
@@ -26,6 +24,4 @@ def parse():
         chat_log.close()
         chat_parsed.close()
     except IndexError:
-        chat_parsed.write("['ERROR', 'ERROR']\n")
-        chat_log.close()
-        chat_parsed.close()
+        pass
