@@ -10,7 +10,6 @@ def func1():
 
 
 def func2():
-    global users, cd
     print('Iniciando comprobación de comandos')
     Comandos.main()
 

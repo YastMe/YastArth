@@ -37,6 +37,10 @@ def main():
                 cd[i] -= 1
         if cd[2] == 0:
             cd = ad(cd)
+        if x == 2500:
+            x = 0
+            chat.close()
+            chat = open("chat.txt", "r", encoding="utf-8")
 
 
 def comprobar(lineas, lineas_act, lineas_prev, cd, users):  ##Comprobación y ejecución de comandos
@@ -49,7 +53,7 @@ def comprobar(lineas, lineas_act, lineas_prev, cd, users):  ##Comprobación y ej
         if len(msg) > 0:
             if msg[0] == '!':
                 cmd(msg, usr, cd)
-            if msg.lower() == "nullpo":
+            if msg.lower() == "nullpo" or msg.lower() == "nullpointerexception":
                 if cd[4] == 0:
                     gah(usr)
                     cd[4] = 3000
@@ -157,5 +161,5 @@ def gah(user):
     Sender.chat(f"/me ¡{user}, no hagas eso!")
     sonido = mixer.Sound("Sonidos/bonk.mp3")
     sonido.play()
-    if random.randint(1,20) == 20:
+    if random.randint(1, 20) == 20:
         Sender.chat(f"/timeout {user} 10 Bonk")

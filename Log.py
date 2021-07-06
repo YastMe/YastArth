@@ -27,6 +27,7 @@ def log():
     f.close()
 
     x = 0
+    t = 0
 
     while True:
 
@@ -48,6 +49,12 @@ def log():
                 logging.info(demojize(resp))
 
             x = 0
+
+            t += 1
+            if t == 3000:
+                f = open("chat.log", "w", encoding="utf-8")
+                f.write("")
+                f.close()
         except:
             time.sleep(x)
             x = x*2
