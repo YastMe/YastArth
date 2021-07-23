@@ -1,6 +1,7 @@
 import socket
 import config
 
+
 def chat(msg):
     sock = socket.socket()
     server = 'irc.chat.twitch.tv'

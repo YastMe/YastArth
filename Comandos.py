@@ -1,4 +1,3 @@
-import os
 import random
 
 from pygame import mixer
@@ -29,7 +28,10 @@ def main():
         lineas = chat.readlines()
         lineas_act = len(lineas)
         print(f"Ahora: {lineas_act}, Antes: {lineas_prev}")
-        comprobar(lineas, lineas_act, lineas_prev, cd, users)
+        try:
+            comprobar(lineas, lineas_act, lineas_prev, cd, users)
+        except IndexError:
+            Sender.chat("/me Lo siento, algo no ha funcionado.")
         chat.seek(0)
         time.sleep(0.1)
         x += 1
@@ -42,22 +44,23 @@ def main():
 
 def comprobar(lineas, lineas_act, lineas_prev, cd, users):  ##Comprobación y ejecución de comandos
     if lineas_act > lineas_prev:
-        msg = lineas[lineas_act - 1].split("', '")[1].split("'")[0]
-        usr = lineas[lineas_act - 1].split("', '")[0].split("'")[1]
-        if usr not in users and usr != "yastarth":
-            users.append(usr)
-            saludar(usr)
-        if len(msg) > 0:
-            if msg[0] == '!':
-                cmd(msg, usr, cd)
-            if msg.lower() == "nullpo" or msg.lower() == "nullpointerexception":
-                if cd[4] == 0:
-                    gah(usr)
-                    cd[4] = 3000
-                else:
-                    cooldown_failed(usr, "nullpo", cd[4])
-            if (usr == "renzoxrock" or usr == "ginebra08") and msg.split(" ")[0].lower() == "puto":
-                Sender.chat(f"/me ¡Oye, {usr}! ¡Así no se saluda!")
+        if len(lineas[lineas_act - 1].split(" — ")[0].split("'")) > 0:
+            usr = lineas[lineas_act - 1].split(" — ")[0]
+            msg = lineas[lineas_act - 1].split(" — ")[1].split('\n')[0]
+            if usr not in users and usr != "yastarth":
+                users.append(usr)
+                saludar(usr)
+            if len(msg) > 0:
+                if msg.startswith("!"):
+                    cmd(msg, usr, cd)
+                if msg.lower() == "nullpo" or msg.lower() == "nullpointerexception":
+                    if cd[4] == 0:
+                        gah(usr)
+                        cd[4] = 3000
+                    else:
+                        cooldown_failed(usr, "nullpo", cd[4])
+                if (usr == "renzoxrock" or usr == "ginebra08") and msg.split(" ")[0].lower() == "puto":
+                    Sender.chat(f"/me ¡Oye, {usr}! ¡Así no se saluda!")
 
 
 def cmd(msg, user, cd):
@@ -80,10 +83,6 @@ def cmd(msg, user, cd):
                 cooldown_failed(user, command, cd[1])
         if command == "comandos":
             lista(user)
-        elif command == "participantes":
-            participantes(user)
-        elif command == "normas":
-            normas(user)
 
     return cd
 
@@ -125,8 +124,8 @@ def bunko(user):
 def lista(user):
     Sender.chat(f"/me {user}, la lista de comandos es la siguiente:")
     Sender.chat(
-        "/me Comandos simples (no necesitas especificar a quién los apuntas): !bunko, !normas y !participantes. "
-        "Y por lo que más queráis, dejad de decir nullpo")
+        "/me Comandos simples (no necesitas especificar a quién los apuntas): !bunko, !normas, !participantes y "
+        "!equipo. Y por lo que más queráis, dejad de decir nullpo")
     Sender.chat("/me Comandos apuntados (debes especificar a quién los diriges): !gift")
 
 
@@ -140,17 +139,6 @@ def ad(cd):
     return cd
 
 
-def participantes(user):
-    Sender.chat(
-        f"/me {user}, los participantes son los siguientes: Zetaeme_youtube, VSharkness, comandante_shepard, arocet,"
-        f" anuhiu, streamfran, streampatt, hatosito, moonxwisher, kiarafey, niacosplay, mikuchinatsu,"
-        f" pipono_laura, zigredyt, matycyndapoke y YastMe")
-
-
-def normas(user):
-    Sender.chat(f"/me {user}, las normas están en el siguiente enlace: https://pastebin.com/c9R2qPaB")
-
-
 def gah(user):
     mixer.init()
     Sender.chat("Gah!")
@@ -162,3 +150,4 @@ def gah(user):
     sonido.play()
     if random.randint(1, 20) == 20:
         Sender.chat(f"/timeout {user} 10 Bonk")
+

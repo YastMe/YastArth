@@ -1,6 +1,8 @@
 import Log
 import Comandos
 from multiprocessing import Process
+
+import Puntos
 import TkInter
 
 
@@ -12,6 +14,11 @@ def func1():
 def func2():
     print('Iniciando comprobación de comandos')
     Comandos.main()
+
+
+def func3():
+    print('Iniciando sistema de puntos')
+    Puntos.main()
 
 
 if __name__ == '__main__':
@@ -26,8 +33,10 @@ if __name__ == '__main__':
 
     p1 = Process(target=func1)
     p2 = Process(target=func2)
+    p3 = Process(target=func3)
     p1.start()
     p2.start()
+    p3.start()
 
     TkInter.main()
 
@@ -35,3 +44,5 @@ if __name__ == '__main__':
     print("Log terminado")
     p2.terminate()
     print("Comandos terminados")
+    p3.terminate()
+    print("Puntos terminados")
