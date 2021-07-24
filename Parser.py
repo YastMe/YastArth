@@ -2,9 +2,9 @@ import config
 
 
 def parse():
-    chat_log = open('chat.log', "r", encoding="utf-8")
+    chat_log = open('logs/chat.log', "r", encoding="utf-8")
     chat = chat_log.read().split("\n\n\n")
-    chat_parsed = open("chat.txt", "w", encoding="utf-8")
+    chat_parsed = open("logs/chat.txt", "w", encoding="utf-8")
     lines = []
     try:
         for i in chat:

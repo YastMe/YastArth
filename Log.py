@@ -22,7 +22,7 @@ def log():
     sock.send(f"NICK {nickname}\n".encode('utf-8'))
     sock.send(f"JOIN {channel}\n".encode('utf-8'))
 
-    f = open("chat.log", "w", encoding="utf-8")
+    f = open("logs/chat.log", "w", encoding="utf-8")
     f.write("")
     f.close()
 
@@ -31,7 +31,7 @@ def log():
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s — %(message)s',
                         datefmt='%Y-%m-%d_%H:%M:%S',
-                        handlers=[logging.FileHandler('chat.log', encoding='utf-8')])
+                        handlers=[logging.FileHandler('logs/chat.log', encoding='utf-8')])
 
     while True:
 
@@ -48,7 +48,7 @@ def log():
 
             t += 1
             if t == 3000:
-                f = open("chat.log", "w", encoding="utf-8")
+                f = open("logs/chat.log", "w", encoding="utf-8")
                 f.write("")
                 f.close()
         except:

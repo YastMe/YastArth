@@ -24,10 +24,10 @@ def func3():
 if __name__ == '__main__':
     users = []
     cd = []
-    chat = open("chat.txt", "w", encoding="utf-8")
+    chat = open("logs/chat.txt", "w", encoding="utf-8")
     chat.write("")
     chat.close()
-    log = open("chat.log", "w", encoding="utf-8")
+    log = open("logs/chat.log", "w", encoding="utf-8")
     log.write("")
     log.close()
 

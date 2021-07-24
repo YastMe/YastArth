@@ -9,13 +9,13 @@ def main():
     print()
     bunko = generar_bunko(cursor)
 
-    f = open("tienda.yast", "w", encoding="utf-8")
+    f = open(".yast/tienda.yast", "w", encoding="utf-8")
     for x in tienda:
         f.write(x)
         f.write("\n")
     f.close()
 
-    f = open("bunko.yast", "w", encoding="utf-8")
+    f = open(".yast/bunko.yast", "w", encoding="utf-8")
     for x in bunko:
         f.write(x)
         f.write("\n")

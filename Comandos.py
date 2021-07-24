@@ -7,7 +7,7 @@ import Parser
 
 
 def main():
-    chat = open("chat.txt", "r", encoding="utf-8")
+    chat = open("logs/chat.txt", "r", encoding="utf-8")
     users = []
     x = 1
 
