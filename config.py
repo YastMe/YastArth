@@ -1,5 +1,5 @@
 #[Credentials]
-oauth_token = 'oauth:ywv920utnt6p5lavxfqyxha90qojzt'
-channel_id = '189044717'
-nickname = "yastarth"
-channel = "yastme"
+oauth_token = '{bot oauth token}'
+channel_id = '{channel id}'
+nickname = "{bot nickname}"
+channel = "{channel name}"
