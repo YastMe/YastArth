@@ -16,11 +16,6 @@ def func2():
     Comandos.main()
 
 
-def func3():
-    print('Iniciando sistema de puntos')
-    Puntos.main()
-
-
 if __name__ == '__main__':
     users = []
     cd = []
@@ -31,12 +26,12 @@ if __name__ == '__main__':
     log.write("")
     log.close()
 
+    Puntos.main()
+
     p1 = Process(target=func1)
     p2 = Process(target=func2)
-    p3 = Process(target=func3)
     p1.start()
     p2.start()
-    p3.start()
 
     TkInter.main()
 
@@ -44,5 +39,3 @@ if __name__ == '__main__':
     print("Log terminado")
     p2.terminate()
     print("Comandos terminados")
-    p3.terminate()
-    print("Puntos terminados")

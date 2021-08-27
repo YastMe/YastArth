@@ -1,6 +1,8 @@
 import random
 
 from pygame import mixer
+
+import Puntos
 import Sender
 import time
 import Parser
@@ -65,7 +67,7 @@ def comprobar(lineas, lineas_act, lineas_prev, cd, users):  ##Comprobación y ej
 
 def cmd(msg, user, cd):
     command = msg.split("!")[1].split(" ")[0]
-    if len(msg.split(" ")) > 1:  ##Comandos apuntados
+    if len(msg.split(" ")) > 1 and "puntos" not in msg:  ##Comandos apuntados
         dest = msg.split("!")[1].split(" ")[1]
         if command == "gift":  ##!gift
             if cd[0] == 0:
@@ -74,6 +76,8 @@ def cmd(msg, user, cd):
             else:
                 cooldown_failed(user, command, cd[0])
 
+    if "!puntos" in msg:  ##Comandos del sistema de puntos
+        puntos(msg, user)
     else:  ##Comandos simples
         if command == "bunko":  ##!bunko
             if cd[1] == 0:
@@ -151,3 +155,73 @@ def gah(user):
     if random.randint(1, 20) == 20:
         Sender.chat(f"/timeout {user} 10 Bonk")
 
+
+def puntos(msg, user):
+    tipo = len(msg.split(" "))
+    if tipo == 1:
+        pts = Puntos.comprobar(user)
+        if pts == -1:
+            Sender.chat(f"/me Lo siento, {user}, pero aún no estás registrado. "
+                        f"Por favor, comprueba la ayuda en !puntos ayuda")
+        else:
+            Sender.chat(f"/me {user}, tienes {pts} puntos.")
+    elif tipo == 2 or tipo == 3:
+        comando = msg.split(" ")[1]
+        if comando == "ayuda":
+            print("Comando no implementado")
+        elif comando == "registrar":
+            args = msg.split(" ")
+            tipo = len(args)
+            if tipo == 2:
+                Puntos.registrar(user, user)
+            elif tipo == 3:
+                Puntos.registrar(user, args[2])
+        elif comando == "perfil":
+            args = msg.split(" ")
+            tipo = len(args)
+            if tipo == 2:
+                perfil = Puntos.perfil_propio(user)
+                equipo = Puntos.equipo(user)
+                if perfil is None:
+                    Sender.chat(f"/me Lo siento, {user}, pero aún no estás registrado. "
+                                f"Por favor, comprueba la ayuda en !puntos ayuda")
+                else:
+                    if equipo is not None:
+                        Sender.chat(
+                            f"/me {user}, eres {perfil[0]} y tienes {perfil[1]} puntos. {equipo}")
+                    else:
+                        Sender.chat(
+                            f"/me {user}, eres {perfil[0]} y tienes {perfil[1]} puntos.")
+            elif tipo == 3:
+                perfil = Puntos.perfil_ajeno(args[2])
+                equipo = Puntos.equipo_ajeno(args[2])
+                if perfil is None:
+                    Sender.chat(f"/me Lo siento, {user}, pero no he encontrado al usuario que buscas.")
+                else:
+                    if equipo is not None:
+                        Sender.chat(
+                            f"/me {user}, {args[2]} es {perfil[0]} y tiene {perfil[1]} puntos. {equipo}")
+                    else:
+                        Sender.chat(
+                            f"/me {user}, {args[2]} es {perfil[0]} y tiene {perfil[1]} puntos.")
+        elif comando == "inventario":
+            args = msg.split(" ")
+            tipo = len(args)
+            if tipo == 2:
+                inventario = Puntos.inventario(user)
+                if inventario is None:
+                    Sender.chat(f"/me Lo siento, {user}, pero no tienes objetos en tu inventario.")
+                else:
+                    Sender.chat(f"/me {user}, tienes los siguientes objetos en tu inventario: {inventario}")
+            elif tipo == 3:
+                inventario = Puntos.inventario(args[2])
+                if inventario is None:
+                    Sender.chat(f"/me Lo siento, {user}, pero no he encontrado al usuario que buscas.")
+                else:
+                    Sender.chat(f"/me {user}, {args[2]} tiene los siguientes objetos en su inventario: {inventario}")
+        elif comando == "tienda":
+            tienda = Puntos.tienda()
+            Sender.chat(f"/me {user}, los objetos de la tienda con sus precios son los siguientes: {tienda}")
+        elif comando == "bunko":
+            bunko = Puntos.bunko()
+            Sender.chat(f"/me {user}, los objetos de EL BUNKO con sus precios son los siguientes: {bunko}")
